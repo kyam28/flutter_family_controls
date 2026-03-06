@@ -68,8 +68,17 @@ public class FlutterFamilyControlsPlugin: NSObject, FlutterPlugin {
             result(manager.checkAuthorization())
 
         case "showAppPicker":
+            let args = call.arguments as? [String: Any]
+            let title = args?["title"] as? String
+            let cancelLabel = args?["cancelLabel"] as? String
+            let saveLabel = args?["saveLabel"] as? String
             DispatchQueue.main.async {
-                self.showFamilyActivityPicker(result: result)
+                self.showFamilyActivityPicker(
+                    title: title,
+                    cancelLabel: cancelLabel,
+                    saveLabel: saveLabel,
+                    result: result
+                )
             }
 
         case "hasSelectedApps":
@@ -92,7 +101,12 @@ public class FlutterFamilyControlsPlugin: NSObject, FlutterPlugin {
     }
 
     @available(iOS 16.0, *)
-    private func showFamilyActivityPicker(result: @escaping FlutterResult) {
+    private func showFamilyActivityPicker(
+        title: String?,
+        cancelLabel: String?,
+        saveLabel: String?,
+        result: @escaping FlutterResult
+    ) {
         guard let rootVC = UIApplication.shared.keyWindow?.rootViewController else {
             result(FlutterError(code: "NO_VC", message: "No root view controller", details: nil))
             return
@@ -123,7 +137,11 @@ public class FlutterFamilyControlsPlugin: NSObject, FlutterPlugin {
             result(manager.hasSelectedApps())
         }
 
-        let pickerView = FamilyActivityPickerView()
+        let pickerView = FamilyActivityPickerView(
+            title: title ?? "Select Apps",
+            cancelLabel: cancelLabel ?? "Cancel",
+            saveLabel: saveLabel ?? "Save"
+        )
         let hostingController = UIHostingController(rootView: pickerView)
         hostingController.modalPresentationStyle = .pageSheet
 

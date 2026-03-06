@@ -44,8 +44,15 @@ final supported = await FlutterFamilyControls.isSupported();
 // Request authorization
 final authorized = await FlutterFamilyControls.requestAuthorization();
 
-// Show app picker
+// Show app picker (with default English labels)
 final hasApps = await FlutterFamilyControls.showAppPicker();
+
+// Show app picker with custom labels (e.g. Japanese)
+final hasApps2 = await FlutterFamilyControls.showAppPicker(
+  title: '制限するアプリを選択',
+  cancelLabel: 'キャンセル',
+  saveLabel: '保存',
+);
 
 // Enable restrictions (block selected apps)
 await FlutterFamilyControls.enableRestrictions();
@@ -61,7 +68,7 @@ await FlutterFamilyControls.disableRestrictions();
 | `isSupported()` | Returns `true` if Screen Time API is available (iOS 16+, real device) |
 | `requestAuthorization()` | Requests FamilyControls authorization |
 | `isAuthorized()` | Checks if already authorized |
-| `showAppPicker()` | Shows native FamilyActivityPicker. Returns whether apps are selected |
+| `showAppPicker({title, cancelLabel, saveLabel})` | Shows native FamilyActivityPicker with customizable labels. Returns whether apps are selected |
 | `hasSelectedApps()` | Whether any apps/categories are currently selected |
 | `getSelectedAppCount()` | Number of selected apps + categories |
 | `enableRestrictions()` | Blocks the selected apps using ManagedSettings shield |

@@ -7,14 +7,26 @@ struct FamilyActivityPickerView: View {
     @ObservedObject var manager = ScreenTimeManager.shared
     @Environment(\.dismiss) var dismiss
 
+    var title: String
+    var cancelLabel: String
+    var saveLabel: String
+
+    init(title: String = "Select Apps",
+         cancelLabel: String = "Cancel",
+         saveLabel: String = "Save") {
+        self.title = title
+        self.cancelLabel = cancelLabel
+        self.saveLabel = saveLabel
+    }
+
     var body: some View {
         NavigationView {
             FamilyActivityPicker(selection: $manager.activitySelection)
-                .navigationTitle("Select Apps")
+                .navigationTitle(title)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Button("Cancel") {
+                        Button(cancelLabel) {
                             NotificationCenter.default.post(
                                 name: .familyActivityPickerDismissed,
                                 object: nil
@@ -23,7 +35,7 @@ struct FamilyActivityPickerView: View {
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Save") {
+                        Button(saveLabel) {
                             manager.updateSelection(manager.activitySelection)
                             NotificationCenter.default.post(
                                 name: .familyActivityPickerDismissed,

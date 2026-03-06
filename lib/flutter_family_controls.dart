@@ -34,9 +34,22 @@ class FlutterFamilyControls {
 
   /// Show the FamilyActivityPicker to select apps to restrict.
   /// Returns whether any apps are selected after dismissal.
-  static Future<bool> showAppPicker() async {
+  ///
+  /// You can customize the UI strings:
+  /// - [title] - Navigation bar title (default: "Select Apps")
+  /// - [cancelLabel] - Cancel button text (default: "Cancel")
+  /// - [saveLabel] - Save button text (default: "Save")
+  static Future<bool> showAppPicker({
+    String? title,
+    String? cancelLabel,
+    String? saveLabel,
+  }) async {
     try {
-      return await _channel.invokeMethod<bool>('showAppPicker') ?? false;
+      return await _channel.invokeMethod<bool>('showAppPicker', {
+        if (title != null) 'title': title,
+        if (cancelLabel != null) 'cancelLabel': cancelLabel,
+        if (saveLabel != null) 'saveLabel': saveLabel,
+      }) ?? false;
     } catch (_) {
       return false;
     }
