@@ -7,9 +7,9 @@ A Flutter plugin that wraps iOS FamilyControls, ManagedSettings, and FamilyActiv
 to allow Flutter apps to request Screen Time authorization, pick apps to restrict,
 and enable/disable app restrictions.
                        DESC
-  s.homepage         = 'https://github.com/kyam-github/flutter_family_controls'
+  s.homepage         = 'https://github.com/kyam28/flutter_family_controls'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'kyam' => 'kyam@example.com' }
+  s.author           = { 'kyam' => 'kyam28@users.noreply.github.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
