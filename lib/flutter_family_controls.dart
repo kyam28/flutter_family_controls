@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 
+export 'src/selected_app_icons_view.dart';
+
 class FlutterFamilyControls {
   static const _channel = MethodChannel('flutter_family_controls');
 

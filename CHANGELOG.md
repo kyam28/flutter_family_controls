@@ -1,3 +1,9 @@
+## 0.0.4
+
+* Add `SelectedAppIconsView` widget — a native platform view that shows the
+  selected apps/categories as a horizontally scrollable row of icons
+  (rendered via SwiftUI `Label(token)`, auto-updates after picker saves)
+
 ## 0.0.3
 
 * Lower minimum iOS deployment target to 13.0 (Screen Time features require iOS 16+ at runtime via @available checks)
