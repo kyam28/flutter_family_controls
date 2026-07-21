@@ -12,6 +12,10 @@ This plugin allows Flutter apps to:
 - **iOS 16.0+** (real device only, not supported on Simulator)
 - The `Family Controls` capability must be added to your Xcode project
 
+> **Android**: the Screen Time API is iOS-only. The plugin can still be
+> included on Android — every method safely reports "unsupported"
+> (`isSupported()` returns `false`), so no platform guards are needed.
+
 ## Setup
 
 ### 1. Add the capability in Xcode
@@ -61,6 +65,26 @@ await FlutterFamilyControls.enableRestrictions();
 await FlutterFamilyControls.disableRestrictions();
 ```
 
+
+### Showing the selected apps' icons
+
+Apple keeps the selection opaque — your app can never read the selected
+apps' names or icons as data. The only sanctioned way to display them is
+SwiftUI's `Label(token)`, which this plugin embeds as a platform view:
+
+```dart
+// Horizontally scrollable row of the selected app/category icons.
+// Updates automatically after the picker saves.
+const SelectedAppIconsView(
+  height: 48,
+  iconSize: 40,
+  spacing: 8,
+)
+```
+
+Renders nothing on non-iOS platforms, and falls back to an empty view on
+the Simulator or iOS < 16.
+
 ## API
 
 | Method | Description |
@@ -73,6 +97,7 @@ await FlutterFamilyControls.disableRestrictions();
 | `getSelectedAppCount()` | Number of selected apps + categories |
 | `enableRestrictions()` | Blocks the selected apps using ManagedSettings shield |
 | `disableRestrictions()` | Removes all app restrictions |
+| `SelectedAppIconsView` (widget) | Native horizontal row of the selected app icons |
 
 ## How it works
 

@@ -17,6 +17,10 @@ public class FlutterFamilyControlsPlugin: NSObject, FlutterPlugin {
         )
         let instance = FlutterFamilyControlsPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        registrar.register(
+            SelectedAppIconsViewFactory(),
+            withId: SelectedAppIconsViewFactory.viewType
+        )
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

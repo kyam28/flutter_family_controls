@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 
+export 'src/selected_app_icons_view.dart';
+
 class FlutterFamilyControls {
   static const _channel = MethodChannel('flutter_family_controls');
 
@@ -46,10 +48,11 @@ class FlutterFamilyControls {
   }) async {
     try {
       return await _channel.invokeMethod<bool>('showAppPicker', {
-        if (title != null) 'title': title,
-        if (cancelLabel != null) 'cancelLabel': cancelLabel,
-        if (saveLabel != null) 'saveLabel': saveLabel,
-      }) ?? false;
+            if (title != null) 'title': title,
+            if (cancelLabel != null) 'cancelLabel': cancelLabel,
+            if (saveLabel != null) 'saveLabel': saveLabel,
+          }) ??
+          false;
     } catch (_) {
       return false;
     }
