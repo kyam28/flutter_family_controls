@@ -12,6 +12,10 @@ This plugin allows Flutter apps to:
 - **iOS 16.0+** (real device only, not supported on Simulator)
 - The `Family Controls` capability must be added to your Xcode project
 
+> **Android**: the Screen Time API is iOS-only. The plugin can still be
+> included on Android — every method safely reports "unsupported"
+> (`isSupported()` returns `false`), so no platform guards are needed.
+
 ## Setup
 
 ### 1. Add the capability in Xcode

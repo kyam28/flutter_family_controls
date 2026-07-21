@@ -1,5 +1,5 @@
 name: flutter_family_controls
-description: A Flutter plugin for iOS Screen Time API. Provides FamilyControls authorization, FamilyActivityPicker for app selection, and ManagedSettings for enabling/disabling app restrictions.
+description: iOS Screen Time plugin — FamilyControls authorization, FamilyActivityPicker app selection, and ManagedSettings shields to block selected apps.
 version: 0.0.4
 homepage: https://github.com/kyam28/flutter_family_controls
 repository: https://github.com/kyam28/flutter_family_controls
@@ -22,4 +22,7 @@ flutter:
   plugin:
     platforms:
       ios:
+        pluginClass: FlutterFamilyControlsPlugin
+      android:
+        package: com.kyam28.flutter_family_controls
         pluginClass: FlutterFamilyControlsPlugin

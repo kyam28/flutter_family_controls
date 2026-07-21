@@ -1,62 +1,110 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_family_controls/flutter_family_controls.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: ExamplePage());
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  final _flutterFamilyControlsPlugin = FlutterFamilyControls();
+class ExamplePage extends StatefulWidget {
+  const ExamplePage({super.key});
+
+  @override
+  State<ExamplePage> createState() => _ExamplePageState();
+}
+
+class _ExamplePageState extends State<ExamplePage> {
+  bool _supported = false;
+  bool _authorized = false;
+  int _selectedCount = 0;
+  bool _restrictionsEnabled = false;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    _refresh();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await _flutterFamilyControlsPlugin.getPlatformVersion() ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
+  Future<void> _refresh() async {
+    final supported = await FlutterFamilyControls.isSupported();
+    final authorized = await FlutterFamilyControls.isAuthorized();
+    final count = await FlutterFamilyControls.getSelectedAppCount();
     if (!mounted) return;
-
     setState(() {
-      _platformVersion = platformVersion;
+      _supported = supported;
+      _authorized = authorized;
+      _selectedCount = count;
     });
+  }
+
+  Future<void> _requestAuthorization() async {
+    await FlutterFamilyControls.requestAuthorization();
+    await _refresh();
+  }
+
+  Future<void> _selectApps() async {
+    await FlutterFamilyControls.showAppPicker(title: 'Select Apps to Restrict');
+    await _refresh();
+  }
+
+  Future<void> _toggleRestrictions() async {
+    if (_restrictionsEnabled) {
+      await FlutterFamilyControls.disableRestrictions();
+    } else {
+      await FlutterFamilyControls.enableRestrictions();
+    }
+    setState(() => _restrictionsEnabled = !_restrictionsEnabled);
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('flutter_family_controls example')),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text('Supported: $_supported'),
+          Text('Authorized: $_authorized'),
+          Text('Selected apps/categories: $_selectedCount'),
+          const SizedBox(height: 16),
+          FilledButton(
+            onPressed: _supported && !_authorized
+                ? _requestAuthorization
+                : null,
+            child: const Text('Request authorization'),
+          ),
+          const SizedBox(height: 8),
+          FilledButton(
+            onPressed: _authorized ? _selectApps : null,
+            child: const Text('Select apps'),
+          ),
+          const SizedBox(height: 8),
+          FilledButton(
+            onPressed: _authorized && _selectedCount > 0
+                ? _toggleRestrictions
+                : null,
+            child: Text(
+              _restrictionsEnabled
+                  ? 'Disable restrictions'
+                  : 'Enable restrictions',
+            ),
+          ),
+          const SizedBox(height: 24),
+          if (_selectedCount > 0) ...[
+            const Text('Selected app icons:'),
+            const SizedBox(height: 8),
+            // Native, horizontally scrollable row of the selected app icons
+            const SelectedAppIconsView(height: 48, iconSize: 40),
+          ],
+        ],
       ),
     );
   }
