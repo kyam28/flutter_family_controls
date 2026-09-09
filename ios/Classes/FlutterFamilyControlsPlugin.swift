@@ -68,8 +68,19 @@ public class FlutterFamilyControlsPlugin: NSObject, FlutterPlugin {
                 }
             }
 
+        case "requestAuthorizationDetailed":
+            Task {
+                let outcome = await manager.requestAuthorizationResult()
+                DispatchQueue.main.async {
+                    result(outcome)
+                }
+            }
+
         case "isAuthorized":
             result(manager.checkAuthorization())
+
+        case "getAuthorizationStatus":
+            result(manager.authorizationStatusName())
 
         case "showAppPicker":
             let args = call.arguments as? [String: Any]
@@ -90,6 +101,12 @@ public class FlutterFamilyControlsPlugin: NSObject, FlutterPlugin {
 
         case "getSelectedAppCount":
             result(manager.getSelectedAppCount())
+
+        case "getSelectedApplicationCount":
+            result(manager.getSelectedApplicationCount())
+
+        case "getSelectedCategoryCount":
+            result(manager.getSelectedCategoryCount())
 
         case "enableRestrictions":
             manager.enableRestrictions()

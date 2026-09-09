@@ -48,6 +48,12 @@ final supported = await FlutterFamilyControls.isSupported();
 // Request authorization
 final authorized = await FlutterFamilyControls.requestAuthorization();
 
+// ...or get the reason when it fails
+final outcome = await FlutterFamilyControls.requestAuthorizationDetailed();
+if (outcome == FamilyControlsAuthorizationResult.unavailable) {
+  // Screen Time is turned off in Settings — tell the user to enable it
+}
+
 // Show app picker (with default English labels)
 final hasApps = await FlutterFamilyControls.showAppPicker();
 
@@ -91,10 +97,13 @@ the Simulator or iOS < 16.
 |---|---|
 | `isSupported()` | Returns `true` if Screen Time API is available (iOS 16+, real device) |
 | `requestAuthorization()` | Requests FamilyControls authorization |
+| `requestAuthorizationDetailed()` | Same, but returns a `FamilyControlsAuthorizationResult` (`approved`, `unavailable` = Screen Time off, `authorizationCanceled`, `restricted`, ...) |
 | `isAuthorized()` | Checks if already authorized |
+| `getAuthorizationStatus()` | Returns `FamilyControlsAuthorizationStatus` (`notDetermined` / `denied` / `approved`) |
 | `showAppPicker({title, cancelLabel, saveLabel})` | Shows native FamilyActivityPicker with customizable labels. Returns whether apps are selected |
 | `hasSelectedApps()` | Whether any apps/categories are currently selected |
 | `getSelectedAppCount()` | Number of selected apps + categories |
+| `getSelectedApplicationCount()` / `getSelectedCategoryCount()` | Split counts. iOS can shield at most `maxShieldedApplications` (50) individual apps — beyond that the system shields nothing, so warn the user (categories don't count) |
 | `enableRestrictions()` | Blocks the selected apps using ManagedSettings shield |
 | `disableRestrictions()` | Removes all app restrictions |
 | `SelectedAppIconsView` (widget) | Native horizontal row of the selected app icons |
