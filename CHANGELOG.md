@@ -1,3 +1,17 @@
+## 0.0.5
+
+* Add `requestAuthorizationDetailed()` returning a
+  `FamilyControlsAuthorizationResult` so apps can explain failures
+  (`unavailable` = Screen Time is turned off, `authorizationCanceled`,
+  `restricted`, ...)
+* Add `getAuthorizationStatus()` returning
+  `FamilyControlsAuthorizationStatus` (notDetermined / denied / approved)
+* Work around the undocumented 50-app shield limit: iOS shields *nothing*
+  when `shield.applications` gets more than 50 tokens, so
+  `enableRestrictions()` now shields the first 50 instead. Add
+  `maxShieldedApplications`, `getSelectedApplicationCount()` and
+  `getSelectedCategoryCount()` so apps can warn users
+
 ## 0.0.4
 
 * Add no-op Android implementation — all methods report "unsupported",

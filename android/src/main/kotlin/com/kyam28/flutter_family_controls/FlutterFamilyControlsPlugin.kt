@@ -28,7 +28,11 @@ class FlutterFamilyControlsPlugin : FlutterPlugin, MethodChannel.MethodCallHandl
             "hasSelectedApps",
             "enableRestrictions",
             "disableRestrictions" -> result.success(false)
-            "getSelectedAppCount" -> result.success(0)
+            "getSelectedAppCount",
+            "getSelectedApplicationCount",
+            "getSelectedCategoryCount" -> result.success(0)
+            "requestAuthorizationDetailed" -> result.success("unsupported")
+            "getAuthorizationStatus" -> result.success("notDetermined")
             else -> result.notImplemented()
         }
     }
