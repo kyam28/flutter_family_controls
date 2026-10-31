@@ -1,3 +1,9 @@
+## 0.0.6
+
+* iOS: Swift Package Manager 対応を追加（CocoaPods も引き続き利用可）。
+  Swift ソースを `ios/flutter_family_controls/Sources/flutter_family_controls/`
+  に移動し、`Package.swift` を追加。最小 iOS を 15.0 に統一
+
 ## 0.0.5
 
 * Add `requestAuthorizationDetailed()` returning a
