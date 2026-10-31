@@ -20,6 +20,9 @@ let package = Package(
             name: "flutter_family_controls",
             dependencies: [
                 .product(name: "FlutterFramework", package: "FlutterFramework")
+            ],
+            resources: [
+                .process("Resources/PrivacyInfo.xcprivacy")
             ]
         )
     ]

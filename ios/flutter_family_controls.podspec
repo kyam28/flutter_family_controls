@@ -17,4 +17,6 @@ and enable/disable app restrictions.
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
   s.swift_version = '5.0'
+
+  s.resource_bundles = {'flutter_family_controls_privacy' => ['flutter_family_controls/Sources/flutter_family_controls/Resources/PrivacyInfo.xcprivacy']}
 end

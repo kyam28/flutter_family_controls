@@ -3,6 +3,7 @@
 * iOS: Swift Package Manager 対応を追加（CocoaPods も引き続き利用可）。
   Swift ソースを `ios/flutter_family_controls/Sources/flutter_family_controls/`
   に移動し、`Package.swift` を追加。最小 iOS を 15.0 に統一
+* iOS: `PrivacyInfo.xcprivacy` を SwiftPM / CocoaPods の両方でアプリに同梱するよう修正
 
 ## 0.0.5
 
