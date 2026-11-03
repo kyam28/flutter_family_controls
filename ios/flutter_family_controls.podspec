@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'flutter_family_controls'
-  s.version          = '0.0.6'
+  s.version          = '0.0.7'
   s.summary          = 'Flutter plugin for iOS Screen Time API (FamilyControls / ManagedSettings).'
   s.description      = <<-DESC
 A Flutter plugin that wraps iOS FamilyControls, ManagedSettings, and FamilyActivityPicker

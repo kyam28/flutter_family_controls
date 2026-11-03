@@ -1,3 +1,10 @@
+## 0.0.7
+
+* Android: Built-in Kotlin に移行（`kotlin-android` プラグインの適用をやめ、
+  `kotlin { compilerOptions }` に変更）。AGP 9 + Flutter 3.47 で出る
+  「plugins that apply Kotlin Gradle Plugin (KGP)」警告を解消
+* 最小バージョンを Flutter 3.44 / Dart 3.12 に引き上げ
+
 ## 0.0.6
 
 * iOS: Swift Package Manager 対応を追加（CocoaPods も引き続き利用可）。

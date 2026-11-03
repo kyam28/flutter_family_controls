@@ -1,14 +1,14 @@
 group = 'com.kyam28.flutter_family_controls'
-version = '0.0.4'
+version = '0.0.7'
 
 buildscript {
-    ext.kotlin_version = '1.9.24'
+    ext.kotlin_version = '2.3.21'
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath 'com.android.tools.build:gradle:8.13.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -20,8 +20,10 @@ allprojects {
     }
 }
 
+// Built-in Kotlin 対応: KGP はアプリ側（AGP 9 の Built-in Kotlin、または
+// android.builtInKotlin=false のときは Flutter Gradle Plugin）が適用するので、ここでは適用しない。
+// https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
     namespace = 'com.kyam28.flutter_family_controls'
@@ -32,15 +34,17 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = '11'
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
         minSdk = 21
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
     }
 }
